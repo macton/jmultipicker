@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Multi Color Picker</title>
+    <script src="lib/jquery-1.9.1.js"></script>
+    <script src="lib/jquery-ui.js"></script>
+    <script src="js/jpicker.vector.js"></script>
+    <script src="js/jpicker.constant.js"></script>
+    <script src="js/jpicker.init.js"></script>
+    <script src="js/jpicker.until.js"></script>
+    <script src="js/jpicker.main.js"></script>
+    <link type="text/css" rel="stylesheet" href="lib/jquery-ui.css" />
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+</head>
+<body ontouchmove="event.preventDefault();">
+
+    <div id="zonePickerWrapper">
+        <div class="zonePickerWrapperEdit">
+
+            <!-- Start Menu Navigator  -->
+            <div id="navigatorPicker" class="navigatorPicker">
+                <ul>
+                    <li><a class="menuActive" getsrcimage="images/picker-spectrum.png" getsrcimagestepped="images/picker-spectrum-stepped.png" idadjustment="#Adjusment_Spectrum" href="javascript:void(0);">Spectrum</a></li>
+                    <li><a getsrcimage="images/picker-wheel.png" getsrcimagestepped="images/picker-wheel.png" idadjustment="#Adjusment_Wheel" href="javascript:void(0);">Wheel</a></li>
+                    <li><a getsrcimage="images/picker-grayscale.png" getsrcimagestepped="images/picker-grayscale-stepped.png" idadjustment="#Adjusment_Gray" href="javascript:void(0);">Grayscale</a></li>
+                    <li><a getsrcimage="images/picker-normals.png" getsrcimagestepped="images/picker-normals-stepped.png" idadjustment="#Adjusment_Normals" href="javascript:void(0);" style="width: 50px;">Normals</a></li>
+                </ul>
+            </div>
+            <!-- End Menu Navigator  -->
+
+            <!-- Start Zone For Picker And Value  -->
+            <div id="canvasPicker">
+                <!-- Start Picker Zone  -->
+                <div id="zonePicker">
+                    <canvas id="picker" width="225" height="225" onclick="event.preventDefault();" ontouchmove="event.preventDefault();" ontouchstart="event.preventDefault();"></canvas>
+                    <canvas id="wheelpicker" width="150" height="150" onclick="event.preventDefault();" ontouchmove="event.preventDefault();" ontouchstart="event.preventDefault();" style="display: none"></canvas>
+                    <!-- Start Option View For Picker  -->
+                    <div id="zoneOptionView" title="Stepped / Smooth"></div>
+                    <div id="zoneOptionViewImage"></div>
+                    <!-- End Option View For Picker  -->
+                    <div id="cursorpicker"></div>
+                    <div id="cursorpicker_wheel"></div>
+                </div>
+                <!-- End Picker Zone  -->
+
+                <div style="clear: both"></div>
+            </div>
+            <!-- Start Zone For Picker And Value  -->
+            <div style="clear: both"></div>
+
+            <!-- Start Zone Option Get Value  -->
+            <div id="zoneOptionGetValue" class="navigatorPicker">
+                <ul>
+                    <li><a class="menuActive" href="#/Adjustment">ADJUSTMENTS</a></li>
+                    <li><a href="#/Gradient">GRADIENTS</a></li>
+                    <li><a href="#/Value" style="width: 55px;">VALUES</a></li>
+                </ul>
+                <div id="zoneOptionEdt" class="zoneOptionEdt">
+                    <div id="Adjustment">
+                        <div id="Adjusment_Spectrum" style="display: block">
+                            <div class="previewColor">
+                                <div class="color1 colorsmall1 colorActive"></div>
+                                <div class="color2 colorsmall2"></div>
+                            </div>
+                            <div style="width: 240px; float: left; margin-top: 20px;">
+                                <div style="margin-bottom: 5px;">
+                                    <div class="title_adjusment" style="float: left">S </div>
+                                    <div id="slider_saturation" class="slider_ajusment" style="float: left"></div>
+                                    <div style="float: left; margin-top: -2px">
+                                        <input id="saturationVal" class="value_adjustment" type="text" value="0" />
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div style="margin-bottom: 5px;">
+                                    <div class="title_adjusment" style="float: left">V </div>
+                                    <div id="slider_value" class="slider_ajusment" style="float: left"></div>
+                                    <div style="float: left; margin-top: -2px">
+                                        <input id="valueVal" class="value_adjustment" type="text" value="1" />
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div style="margin-bottom: 5px;">
+                                    <div class="title_adjusment" style="float: left">F </div>
+                                    <div id="slider_fade" class="slider_ajusment" style="float: left"></div>
+                                    <div style="float: left; margin-top: -2px">
+                                        <input id="fadeValue" class="value_adjustment" type="text" value="1" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+
+                        <div id="Adjusment_Wheel" style="display: none">
+                            <div class="previewColor">
+                                <div class="color1 colorsmall1 colorActive"></div>
+                                <div class="color2 colorsmall2"></div>
+                            </div>
+                            <div style="float: left; margin-top: 20px; width: 240px; font-weight: normal;">
+                                <i>No Adjustment Options</i>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+
+                        <div id="Adjusment_Gray" style="display: none">
+                            <div class="previewColor">
+                                <div class="color1 colorsmall1 colorActive"></div>
+                                <div class="color2 colorsmall2"></div>
+                            </div>
+                            <div style="width: 240px; float: left; margin-top: 20px;">
+                                <div style="margin-bottom: 15px;">
+                                    <div class="title_adjusment" style="float: left">H </div>
+                                    <div id="slider_hight" class="slider_ajusment" style="float: left"></div>
+                                    <div style="float: left; margin-top: -2px">
+                                        <input id="hightVal" class="value_adjustment" type="text" value="1" />
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div>
+                                    <div class="title_adjusment" style="float: left">L </div>
+                                    <div id="slider_low" class="slider_ajusment" style="float: left"></div>
+                                    <div style="float: left; margin-top: -2px">
+                                        <input id="lowVal" class="value_adjustment" type="text" value="1" />
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </div>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+
+                        <div id="Adjusment_Normals" style="display: none">
+                            <div class="previewColor">
+                                <div class="color1 colorsmall1 colorActive"></div>
+                                <div class="color2 colorsmall2"></div>
+                            </div>
+                            <div style="width: 240px; float: left; margin-top: 20px">
+                                <div style="margin-bottom: 5px;">
+                                    <div class="title_adjusment" style="float: left">I </div>
+                                    <div id="slider_int" class="slider_ajusment" style="float: left"></div>
+                                    <div style="float: left; margin-top: -2px">
+                                        <input id="intVal" class="value_adjustment" type="text" value="1" />
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </div>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    </div>
+
+                    <div id="Gradient">
+                        <div class="previewColor">
+                            <div class="color1 colorsmall1 colorActive"></div>
+                            <div class="color2 colorsmall2"></div>
+                        </div>
+                        <div style="width: 240px; float: left; margin-top: 20px;">
+                            <div id="GradientLine1">
+                                <div id="Gra1-01" class="colorGradient"></div>
+                                <div id="Gra1-02" class="colorGradient"></div>
+                                <div id="Gra1-03" class="colorGradient"></div>
+                                <div id="Gra1-04" class="colorGradient"></div>
+                                <div id="Gra1-05" class="colorGradient"></div>
+                                <div id="Gra1-06" class="colorGradient colorGradientCenter"></div>
+                                <div id="Gra1-07" class="colorGradient"></div>
+                                <div id="Gra1-08" class="colorGradient"></div>
+                                <div id="Gra1-09" class="colorGradient"></div>
+                                <div id="Gra1-10" class="colorGradient"></div>
+                                <div id="Gra1-11" class="colorGradient"></div>
+                                <div style="clear: both"></div>
+                            </div>
+                            <div id="GradientLine2">
+                                <div id="Gra2-01" class="colorGradient">
+                                    <div style="margin-top: 22px; font-weight: normal;">+1</div>
+                                </div>
+                                <div id="Gra2-02" class="colorGradient"></div>
+                                <div id="Gra2-03" class="colorGradient"></div>
+                                <div id="Gra2-04" class="colorGradient"></div>
+                                <div id="Gra2-05" class="colorGradient"></div>
+                                <div id="Gra2-06" class="colorGradient colorGradientCenter">
+                                    <div style="margin-top: 22px; text-align: center; font-weight: normal;">0</div>
+                                </div>
+                                <div id="Gra2-07" class="colorGradient"></div>
+                                <div id="Gra2-08" class="colorGradient"></div>
+                                <div id="Gra2-09" class="colorGradient"></div>
+                                <div id="Gra2-10" class="colorGradient"></div>
+                                <div id="Gra2-11" class="colorGradient">
+                                    <div style="margin-top: 22px; text-align: right; font-weight: normal;">-1</div>
+                                </div>
+                                <div style="clear: both"></div>
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+
+                    <div id="Value">
+                        <div class="previewColor">
+                            <div class="color1 colorsmall1 colorActive"></div>
+                            <div class="color2 colorsmall2"></div>
+                        </div>
+                        <div style="width: 240px; float: left; margin-top: 20px">
+                            <div id="HSVMode" class="boardColor">
+                                <div class="splitColor">
+                                    <label>H :</label>
+                                    <input type="text" id="hVal" />
+                                </div>
+                                <div class="splitColor">
+                                    <label>S :</label>
+                                    <input type="text" id="sVal" />
+                                </div>
+                                <div class="splitColor">
+                                    <label>V :</label>
+                                    <input type="text" id="vVal" />
+                                </div>
+                            </div>
+                            <div id="RGBMode" class="boardColor">
+                                <div class="splitColor">
+                                    <label class="textRed">R :</label>
+                                    <input type="text" id="rVal" />
+                                </div>
+                                <div class="splitColor">
+                                    <label class="textGreen">G :</label>
+                                    <input type="text" id="gVal" />
+                                </div>
+                                <div class="splitColor">
+                                    <label class="textBlue">B :</label>
+                                    <input type="text" id="bVal" />
+                                </div>
+                            </div>
+                            <div id="RGB2Mode" class="boardColor">
+                                <div class="splitColor">
+                                    <input type="text" id="r2Val" style="width: 60px" />
+                                </div>
+                                <div class="splitColor">
+                                    <input type="text" id="g2Val" style="width: 60px" />
+                                </div>
+                                <div class="splitColor">
+                                    <input type="text" id="b2Val" style="width: 60px" />
+                                </div>
+                            </div>
+                            <div style="clear: both"></div>
+                            <div id="HEXMode" class="colorHEX">
+                                <label>HEX :</label>
+                                <input type="text" id="hexVal" />
+                            </div>
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Zone Option Get Value-->
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            pickerUntil.div_pos = pickerUntil.findPos(constants.tag_canvas);
+        });
+    </script>
+
+</body>
+</html>
