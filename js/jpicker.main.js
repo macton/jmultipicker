@@ -24,7 +24,7 @@ pickerMain.Load = function () {
 
 pickerMain.Draw = function () {
     var srcImage = (!constants.images_mooth) ? constants.images_src1 : constants.images_src2;
-    constants.img_canvas.onLoad = function() {
+    constants.img_canvas.onload = function() {
         constants.cont_canvas.drawImage(constants.img_canvas, 0, 0, constants.img_canvas.width, constants.img_canvas.height);
     };
     constants.img_canvas.src = srcImage;
